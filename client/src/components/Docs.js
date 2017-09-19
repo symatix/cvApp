@@ -22,7 +22,6 @@ class Docs extends Component {
         if (!_.isEmpty(this.props.docs)){
             return(
                 <div>
-                    <span>> documentation</span>
                     <p>API DOCUMENTATION</p>
                     <p>The API is exposed via local tunnel. This version adds several features that enable communication to fetch and send data.<br/>
                     The commands are issued using a CLI interface.</p>
@@ -49,10 +48,9 @@ class Docs extends Component {
                     </table>
                     <p>Usage examples</p>
                     <ul>
-                        <li><code className="blue">api.get(cv)</code> <span className="grey">- fetches the CV from the server</span></li>
                         <li><code className="blue">api.get(services)</code> <span className="grey">- lists all services provided</span></li>
-                        <li><code className="blue">api.get(contact/email)</code> <span className="grey">- displays email</span></li>
-                        <li><code className="blue">api.post(request)</code> <span className="grey">- sends a request</span> @DinoKraljeta</li>
+                        <li><code className="blue">api.get(contact)</code> <span className="grey">- display contact information</span></li>
+                        <li><code className="blue">api.post(request)</code> <span className="grey">- send a request</span> @DinoKraljeta</li>
                     </ul>
                     <p>To clear the screen, simply write <code className="blue">cls</code></p>
                 </div>

@@ -22,6 +22,11 @@ input:-webkit-autofill:active {
 td{
     min-width:100px;
 }
+.header{
+    width:100%;
+    margin-bottom:15px;
+    border-bottom:2px solid grey;
+}
 .hidden{
     display:none;
 }

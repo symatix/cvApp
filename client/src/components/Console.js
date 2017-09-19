@@ -1,63 +1,64 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { validateCommand } from '../utility/validate_command'
+import { executeCommand } from '../utility/execute_command'
 
 class Console extends Component {
     constructor(props){
         super(props);
-        this.state = { input: "", error: false }
+        this.state = { input: "" }
 
         this.handleInput = this.handleInput.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.submitCallback = this.submitCallback.bind(this)
     }
 
     handleInput(e){
-        this.setState({ input: e.target.value })
+        this.setState({ input: e.target.value, command: '' })
     }
 
-    validateInput(input){
-
+    submitCallback(){
+        this.props.inputToState(this.state.command)
+        this.setState({ input: '' })
     }
 
     handleSubmit(e){
 		e.preventDefault();
-        this.setState({ error: false })
+        const validated = validateCommand(this.state.input);
+        const command = executeCommand(validated);
+        this.setState({ command: command })
 
-        const input = this.state.input.split('(');
-        let command;
-        let request;
-
-        if (input.length > 1){
-            request = input[0].split('.');
-            request = request[1].substring(0, input[1].length - 1).trim().toLowerCase();
-            command = input[1].substring(0, input[1].length - 1).trim().toLowerCase();
-        } else {
-            command = input[0].trim().toLowerCase();
+        switch(command){
+            case "docs":
+                this.props.fetchApi(this.submitCallback)
+                break;
+            case "contact":
+                this.props.fetchContact(validated[0], this.submitCallback)
+                break;
+            case "services":
+                this.props.fetchServices(this.submitCallback);
+                break;
+            case "cls":
+                this.props.clearState(this.submitCallback);
+                break;
+            case "error":
+                this.props.inputToState(command)
+                this.setState({ input: '' })
+                break;
+            default:
+                return;
         }
-        if (command === "documentation" || command === "help"){
-            this.props.fetchApi(() => this.setState({ input: '' }))
 
-        } else if (request === "get" && command.includes("contact")){
-            this.props.fetchContact(command, () => this.setState({ input: '' }))
 
-        } else if (request === "get" && command === "services"){
-            this.props.fetchServices(() => this.setState({ input: '' }))
-
-        } else if (command === "cls") {
-            this.props.clearState(() => this.setState({ input: '' }));
-
-        } else {
-            this.props.fetchData()
-            this.setState({ error: true })
-        }
     }
+
     render(){
         return(
-        <div>
-
-            <p className={this.state.error ? "red" : "hidden"}>The command is not recodnized</p>
             <form onSubmit={this.handleSubmit}>
-                > <input
+                <span className="green">{this.props.client.address}@servicesAPI </span>
+                <span className="blue">/usr/shell $ </span>
+                <input
                     id="console"
                     type="text"
                     autoFocus="true"
@@ -65,9 +66,11 @@ class Console extends Component {
                     onChange={this.handleInput}
                     value={this.state.input}/>
             </form>
-        </div>
         )
     }
 }
 
-export default connect(null, actions)(Console);
+function mapStateToProps({ client }){
+    return { client }
+}
+export default connect(mapStateToProps, actions)(Console);

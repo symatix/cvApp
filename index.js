@@ -5,6 +5,7 @@ const keys = require('./config/keys');
 require('./models/docs');
 require('./models/contact');
 require('./models/services');
+require('./models/portfolio');
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoUri)
 

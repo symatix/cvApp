@@ -17,7 +17,6 @@ class Services extends Component {
         if (!_.isEmpty(this.props.services)) {
             return (
                 <div>
-                    <span>> api.get(services)</span>
                     <p>
                         List of services<br />---------------------
                     </p>
