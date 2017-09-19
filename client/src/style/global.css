@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+    padding: 15px;
+    background-color:#0d0d0d;
+    color:#e6e6e6;
+    font-family: Consolas;
+}
+input{
+    font-family: inherit;
+    font-size:inherit;
+    color:#e6e6e6;
+    background-color:inherit;
+    border:none;
+    outline:none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    background-color:inherit;
+}
+td{
+    min-width:100px;
+}
+.hidden{
+    display:none;
+}
+.grey{
+    color:#8c8c8c;
+}
+.red{
+    color:red;
+}
+.green{
+    color:#00e600;
+}
+.blue{
+    color:#4da6ff;
+}
