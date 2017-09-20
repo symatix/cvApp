@@ -3,14 +3,17 @@ import { connect } from 'react-redux';
 import ClientData from './ClientData';
 import Landing from './Landing';
 import Docs from './Docs';
-import Console from './Console';
 import Services from './Services';
 import Contact from './Contact';
+import RequestForm from './RequestForm';
 import Err from './Err';
 
 class App extends Component {
-    handleClick(){
-        document.getElementById("console").focus();
+    focusConsole(){
+        document.querySelector("input").focus();
+    }
+    componentDidMount(){
+        window.addEventListener('click', this.focusConsole);
         return;
     }
 
@@ -21,37 +24,29 @@ class App extends Component {
                 case "docs":
                     return <Docs />
                 case "contact":
-                    return (
-                        <div>
-                            <Contact />
-                        </div>
-                    )
+                    return <Contact />
                 case "services":
                     return <Services />
+                case "request":
+                    return <RequestForm />
+                case "portfolio":
+                    return <p>PORTFOLIO</p>
                 case "cls":
                     return;
                 case "error":
                     return <Err />;
                 default:
-                    return <Landing />;
+                    return <Landing />
             }
         }
         return <Landing />
-
     }
   render() {
     return (
-      <div onClick={this.handleClick} className="App">
-        <div>
+        <div className="App">
             <ClientData />
-
-
             {this.renderResult()}
-
-
-            <Console />
         </div>
-      </div>
     );
   }
 }

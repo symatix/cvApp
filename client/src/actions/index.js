@@ -20,21 +20,21 @@ export const fetchApi = (callback) => async dispatch => {
     callback();
 };
 
-export const fetchContact = (command, callback) => async dispatch => {
-    const res = await axios.get("/api/"+command)
+export const fetchContact = (callback) => async dispatch => {
+    const res = await axios.get("/api/contact")
 
     dispatch({ type: TYPE.FETCH_CONTACT, payload: res.data });
     callback();
 };
-
-export const clearState = (callback) => {
-    callback();
-    return { type: TYPE.CLEAR_STATE, payload: null }
-}
 
 export const fetchServices = (callback) => async dispatch => {
     const res = await axios.get("/api/services");
 
     dispatch({ type: TYPE.FETCH_SERVICES, payload: res.data});
     callback();
+}
+
+export const clearState = (callback) => {
+    callback();
+    return { type: TYPE.CLEAR_STATE, payload: null }
 }

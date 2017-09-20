@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Console from './Console';
 
 class Contact extends Component {
 
     render(){
         const { contact } = this.props;
-        
+
         return(
             <div>
                 <p>Contact information<br/>---------------------</p>
@@ -33,7 +34,12 @@ class Contact extends Component {
                         </tr>
                     </tbody>
                 </table>
-                <p><span className="grey">To contact me now, run </span><code>api.post(request)</code> </p>
+                <p className="grey">
+                    <span>- to send a request, run </span>
+                    <code className="blue">api.post(request) </code>
+                    or
+                    <code className="blue"> .request</code></p>
+                <Console />
             </div>
         )
     }

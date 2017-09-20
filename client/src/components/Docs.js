@@ -1,7 +1,9 @@
-import _ from 'lodash'
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchApi } from '../actions';
+
+import DocsInfo from './DocsInfo';
+import Console from './Console';
 
 class Docs extends Component {
 
@@ -18,51 +20,49 @@ class Docs extends Component {
         })
     }
 
-    renderContent(){
-        if (!_.isEmpty(this.props.docs)){
+    renderUsage(){
+        return this.props.docs.usage.map(({ command, description }) => {
             return(
-                <div>
-                    <p>API DOCUMENTATION</p>
-                    <p>The API is exposed via local tunnel. This version adds several features that enable communication to fetch and send data.<br/>
-                    The commands are issued using a CLI interface.</p>
-                    <p>To fetch data from the server, such as list of services, cv, portfolio, etc., use command
-                        <code className="blue"> api.
-                            <span className="green">get</span>(<span className="grey">[PARAM]</span>)
-                        </code><br/>
-                        To send data to the server (eg.: contact form), use commands
-                        <code className="blue"> api.
-                            <span className="red">post</span>(<span className="grey">[PARAM]</span>)
-                        </code>
-                    </p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>PARAMETER</td>
-                                <td>TYPE</td>
-                                <td>DESCRIPTION</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderParameters()}
-                        </tbody>
-                    </table>
-                    <p>Usage examples</p>
-                    <ul>
-                        <li><code className="blue">api.get(services)</code> <span className="grey">- lists all services provided</span></li>
-                        <li><code className="blue">api.get(contact)</code> <span className="grey">- display contact information</span></li>
-                        <li><code className="blue">api.post(request)</code> <span className="grey">- send a request</span> @DinoKraljeta</li>
-                    </ul>
-                    <p>To clear the screen, simply write <code className="blue">cls</code></p>
-                </div>
+                <tr key={command}>
+                    <td>&#8226;<code className="blue"> {command}</code></td>
+                    <td><code className="grey">{description}</code></td>
+                </tr>
             )
-        }
-        return;
+        })
+    }
+
+    renderNav(){
+        return this.props.docs.nav.map(nav =>{
+            return(<code key={nav}> | <span className="blue">{nav}</span></code>)
+        })
     }
 
     render(){
         return(
             <div>
-                {this.renderContent()}
+                <DocsInfo />
+                <table>
+                    <thead>
+                        <tr>
+                            <td>PARAMETER</td>
+                            <td>TYPE</td>
+                            <td>DESCRIPTION</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.renderParameters()}
+                    </tbody>
+                </table>
+                <p>Usage:</p>
+                <table className="usage">
+                    <tbody>
+                        {this.renderUsage()}
+                    </tbody>
+                </table>
+                <p>Quick usage:<br/>
+                    {this.renderNav()} |
+                </p>
+                <Console />
             </div>
         )
     }

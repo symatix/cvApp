@@ -19,6 +19,10 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     background-color:inherit;
 }
+table.usage{
+    margin-left:15px;
+    margin-bottom:5px;
+}
 td{
     min-width:100px;
 }
@@ -27,8 +31,8 @@ td{
     margin-bottom:15px;
     border-bottom:2px solid grey;
 }
-.hidden{
-    display:none;
+.indent{
+    margin-left:20px;
 }
 .grey{
     color:#8c8c8c;

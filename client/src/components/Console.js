@@ -20,7 +20,6 @@ class Console extends Component {
 
     submitCallback(){
         this.props.inputToState(this.state.command)
-        this.setState({ input: '' })
     }
 
     handleSubmit(e){
@@ -34,7 +33,7 @@ class Console extends Component {
                 this.props.fetchApi(this.submitCallback)
                 break;
             case "contact":
-                this.props.fetchContact(validated[0], this.submitCallback)
+                this.props.fetchContact(this.submitCallback)
                 break;
             case "services":
                 this.props.fetchServices(this.submitCallback);
@@ -42,9 +41,14 @@ class Console extends Component {
             case "cls":
                 this.props.clearState(this.submitCallback);
                 break;
+            case "request":
+                this.props.inputToState(command)
+                break;
+            case "portfolio":
+                this.props.inputToState(command)
+                break;
             case "error":
                 this.props.inputToState(command)
-                this.setState({ input: '' })
                 break;
             default:
                 return;

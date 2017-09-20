@@ -5,6 +5,9 @@ export const validateCommand = (str) => {
 
     if (input.length > 1 && input[0].includes('.')){
         request = input[0].split('.');
+        if (request[0] !== "api"){
+            return ["error"]
+        }
         request = request[1].substring(0, input[1].length - 1).trim().toLowerCase();
         command = input[1].substring(0, input[1].length - 1).trim().toLowerCase();
 

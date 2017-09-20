@@ -2,6 +2,8 @@ import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import Console from './Console';
+
 class Services extends Component {
     renderServices() {
         return this.props.services.map(({ service }) => {
@@ -32,6 +34,7 @@ class Services extends Component {
         return (
             <div>
                 {this.renderContent()}
+                <Console />
             </div>
         );
     }
