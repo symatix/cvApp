@@ -27,9 +27,7 @@ class Console extends Component {
         const validated = validateCommand(this.state.input);
         const command = executeCommand(validated);
         this.setState({ command: command })
-
-        this.props.sendMail();
-
+        
         switch(command){
             case "docs":
                 this.props.fetchApi(this.submitCallback)
@@ -62,7 +60,7 @@ class Console extends Component {
     render(){
         return(
             <form onSubmit={this.handleSubmit}>
-                <span className="green">{this.props.client.address}@servicesAPI </span>
+                <span className="green">{this.props.client.address}@serviceAPI </span>
                 <span className="blue">{this.props.route} $ </span>
                 <input
                     id="console"

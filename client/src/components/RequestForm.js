@@ -5,27 +5,33 @@ import Console from './Console';
 import validateEmail from '../utility/validateEmail';
 
 
+const initialState = {
+    from: '',
+    to: 'd.kraljeta@gmail.com',
+    subject: '',
+    text: '',
+    confirmation:'',
+    inputSubject:false,
+    inputText:false,
+    inputConfirmation:false,
+    console:false,
+    output:'',
+    outputColor:'',
+    errorMsg:'',
+}
+
 class RequestForm extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            from: '',
-            to: 'd.kraljeta@gmail.com',
-            subject: '',
-            text: '',
-            inputSubject:false,
-            inputText:false,
-            console:false,
-            output:'Waiting for response',
-            outputColor:'grey',
-            errorMsg:'',
-        }
+        this.state = { initialState }
 
         this.handleFrom = this.handleFrom.bind(this)
         this.handleSubject = this.handleSubject.bind(this)
         this.handleText = this.handleText.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleForm = this.handleForm.bind(this)
+        this.handleConfirmation = this.handleConfirmation.bind(this)
         this.handleLastKeyPress = this.handleLastKeyPress.bind(this)
         this.nextInput = this.nextInput.bind(this)
 
@@ -55,6 +61,7 @@ class RequestForm extends Component {
                 return;
             }
         }
+        return;
     }
 
 
@@ -71,25 +78,46 @@ class RequestForm extends Component {
     }
     handleSubject(e){
         this.setState({subject:e.target.value})
-
     }
     handleText(e){
         this.setState({text:e.target.value})
     }
+    handleForm(e){
+        if(e.key === "Enter"){
+            if (!this.state.text){
+                this.setState({errorMsg:'Message value not present.'})
+                return;
+            }
+            this.setState({errorMsg:''})
+            this.setState({inputConfirmation:true})
+            return;
+        }
+    }
+
+    handleConfirmation(e){
+        this.setState({confirmation:e.target.value})
+    }
 
     handleSubmit(e){
         e.preventDefault();
-        if(e.key !== "Enter"){
-            return;
-        }
-        const { from, subject, text, to } = this.state;
+        const { confirmation } = this.state;
 
-        if(!text){
-            this.setState({errorMsg:'Message value not present.'})
+        if (confirmation == "n"){
+            this.setState(initialState)
+            this.refs.inputRestart.focus();
             return;
-        } else {
-            this.setState({errorMsg:''})
         }
+
+        if (confirmation == "quit") {
+            this.props.clearState(()=> this.setState(initialState));
+        }
+
+        if (confirmation !== "y") {
+            this.setState({errorMsg:'y = yes, n = no, quit.'})
+            return
+        }
+        this.setState({console:true, output:"waiting...", outputColor:"grey"})
+        const { from, subject, text, to } = this.state;
 
         const mail = {
             from,
@@ -97,12 +125,13 @@ class RequestForm extends Component {
             subject,
             text: text + "\n\n\n// from: " + from   // gmail replaces "from" with authenticated user...so it's me to me by default...
         }
+
         this.props.sendMail(
             mail,
-            ()=>{this.setState({output:"Success: Request sent!", outputColor:"green"})},
-            ()=>{this.setState({output:"Error: message not sent", outputColor:"red"})},
+            ()=>{this.setState({output:"success", outputColor:"green"})},
+            ()=>{this.setState({output:"error", outputColor:"red"})},
         )
-        this.setState({console:true})
+
     }
 
     render(){
@@ -124,6 +153,7 @@ class RequestForm extends Component {
                     <div>
                         <span className="grey">(email): </span>
                         <input
+                            ref="inputRestart"
                             name="from"
                             type="text"
                             spellCheck={false}
@@ -135,6 +165,7 @@ class RequestForm extends Component {
                 </form>
                 {this.renderSubject()}
                 {this.renderText()}
+                {this.renderConfirmation()}
                 <p className="red">{this.state.errorMsg}</p>
                 {this.renderConsole()}
             </div>
@@ -170,13 +201,34 @@ class RequestForm extends Component {
                         <textarea
                             name="text"
                             rows="4"
-                            autoFocus={true}
+                            autoFocus={this.state.inputConfirmation ? false : true}
                             spellCheck={false}
                             autoComplete="off"
+                            onKeyPress={this.handleForm}
                             onChange={this.handleText}
-                            onKeyPress={this.handleLastKeyPress}
                             value={this.state.text} />
                         </div>
+                </form>
+            )
+        }
+        return;
+    }
+    renderConfirmation(){
+        if (this.state.inputConfirmation){
+            return(
+                <form>
+                    <div className={this.state.inputSubject ? "" : "hidden"}>
+                        <span className="grey">confirm (y/n/quit): </span>
+                        <input
+                            name="subject"
+                            type="text"
+                            spellCheck={false}
+                            autoFocus={true}
+                            autoComplete="off"
+                            onKeyPress={this.handleLastKeyPress}
+                            onChange={this.handleConfirmation}
+                            value={this.state.confirmation} />
+                    </div>
                 </form>
             )
         }
@@ -187,7 +239,7 @@ class RequestForm extends Component {
         if(this.state.console){
             return (
                 <div>
-                    <p className={this.state.outputColor}>{this.state.output}</p>
+                    <p>> response: <span className={this.state.outputColor}>{this.state.output}</span></p>
                     <Console route="/request"/>
                 </div>
             )

@@ -6,6 +6,7 @@ import Docs from './Docs';
 import Services from './Services';
 import Contact from './Contact';
 import RequestForm from './RequestForm';
+import Portfolio from './Portfolio';
 import Err from './Err';
 
 class App extends Component {
@@ -33,7 +34,7 @@ class App extends Component {
                 case "request":
                     return <RequestForm />
                 case "portfolio":
-                    return <p>PORTFOLIO</p>
+                    return <Portfolio />
                 case "cls":
                     return;
                 case "error":

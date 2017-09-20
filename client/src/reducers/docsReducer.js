@@ -6,9 +6,9 @@ export default function (state = [], action){
 
 		case FETCH_DOCS:
 			return action.payload
-			
+
 		case CLEAR_STATE:
-			return null;
+			return [];
 
 		default:
 			return state
