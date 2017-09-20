@@ -3,14 +3,14 @@ let transporter = require('../services/mailer');
 module.exports = app => {
 
     app.post('/api/request', (req, res) => {
-        console.log(req.body)
         transporter.sendMail(req.body, (error, info) => {
             if (error) {
-                console.log(error)
-                res.send("Error: request not send!")
-                return;
+                console.log("ERROR SENDING MAIL",error)
+                res.send(false)
+            } else if (!error) {
+                console.log('Mail sent to', info)
+                res.send(true)
             }
-            res.send(true)
         });
     })
 }

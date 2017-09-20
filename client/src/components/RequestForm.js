@@ -7,7 +7,6 @@ import validateEmail from '../utility/validateEmail';
 
 const initialState = {
     from: '',
-    to: 'd.kraljeta@gmail.com',
     subject: '',
     text: '',
     confirmation:'',
@@ -102,13 +101,13 @@ class RequestForm extends Component {
         e.preventDefault();
         const { confirmation } = this.state;
 
-        if (confirmation == "n"){
+        if (confirmation === "n"){
             this.setState(initialState)
             this.refs.inputRestart.focus();
             return;
         }
 
-        if (confirmation == "quit") {
+        if (confirmation === "quit") {
             this.props.clearState(()=> this.setState(initialState));
         }
 
@@ -117,19 +116,18 @@ class RequestForm extends Component {
             return
         }
         this.setState({console:true, output:"waiting...", outputColor:"grey"})
-        const { from, subject, text, to } = this.state;
+        const { from, subject, text } = this.state;
 
         const mail = {
             from,
-            to,
             subject,
-            text: text + "\n\n\n// from: " + from   // gmail replaces "from" with authenticated user...so it's me to me by default...
+            text: text + "\n\n\n// from: " + from,   // gmail replaces "from" with authenticated user...so it's me to me by default...
+            to:'d.kraljeta@gmail.com'
         }
 
         this.props.sendMail(
             mail,
-            ()=>{this.setState({output:"success", outputColor:"green"})},
-            ()=>{this.setState({output:"error", outputColor:"red"})},
+            (cb)=>{ cb ? this.setState({output:"success", outputColor:"green"}) : this.setState({output:"error", outputColor:"red"}) },
         )
 
     }

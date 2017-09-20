@@ -34,12 +34,12 @@ export const fetchServices = (callback) => async dispatch => {
     callback();
 }
 
-export const sendMail = (mailOptions, succ, err) => async dispatch => {
+export const sendMail = (mailOptions, callback) => async dispatch => {
     const res = await axios.post("/api/request", mailOptions);
-    if (res){
-        succ();
+    if (res.data){
+        callback(res.data);
     } else {
-        err();
+        callback(res.data);
     }
     dispatch({type: "SEND_MAIL", payload: res.data})
 }
