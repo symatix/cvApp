@@ -67,8 +67,4 @@ module.exports = app => {
         res.send(data)
     })
 
-    app.get('/api/request', (req, res) => {
-        res.send("Load up the CV")
-    })
-
 }

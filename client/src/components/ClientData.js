@@ -22,6 +22,10 @@ class ClientData extends Component {
                             <td>=> <span className="green">{this.props.client.stateprov} </span> @ <span className="green">{new Date().toString()}</span></td>
                         </tr>
                         <tr>
+                            <td>Message</td>
+                            <td>=> <span className="green">Welcome to SERVICES API by Dino Kraljeta</span></td>
+                        </tr>
+                        <tr>
                             <td>Logging request source to server</td>
                             <td>=> <span className="red">{this.props.client.address}</span></td>
                         </tr>
@@ -30,12 +34,12 @@ class ClientData extends Component {
                             <td>=> <span className="red">{navigator.appVersion}</span></td>
                         </tr>
                         <tr>
-                            <td>App load time</td>
+                            <td>Load time</td>
                             <td>=> <span className="red">{this.caclualteLoadTime()}</span> seconds</td>
                         </tr>
                         <tr>
-                            <td>Message</td>
-                            <td>=> <span className="green">Welcome to SERVICES API by Dino Kraljeta</span></td>
+                            <td>Allowed access to</td>
+                            <td>=> <span className="green">.portfolio .services .contact .request</span></td>
                         </tr>
                     </tbody>
                 </table>

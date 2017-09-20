@@ -13,7 +13,10 @@ class App extends Component {
         document.querySelector("input").focus();
     }
     componentDidMount(){
-        window.addEventListener('click', this.focusConsole);
+        if(this.props.result !== "request"){
+            window.addEventListener('click', this.focusConsole);
+        }
+
         return;
     }
 

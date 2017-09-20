@@ -6,7 +6,7 @@ const Landing = () => {
     return(
         <div>
             <span className="grey">(to start using the API, write "docs")</span>
-            <Console />
+            <Console route="/root"/>
         </div>
     )
 }

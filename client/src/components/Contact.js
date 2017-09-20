@@ -9,7 +9,17 @@ class Contact extends Component {
 
         return(
             <div>
-                <p>Contact information<br/>---------------------</p>
+                <pre>
+                    {`
+                  _             _
+                 | |           | |
+   ___ ___  _ __ | |_ __ _  ___| |_
+  / __/ _ \\| '_ \\| __/ _' |/ __| __|
+ | (_| (_) | | | | || (_| | (__| |_
+  \\___\\___/|_| |_|\\__\\__,_|\\___|\\__|
+                    `}
+                </pre>
+                <p>Information requested<br/>---------------------</p>
                 <table>
                     <tbody>
                         <tr>
@@ -39,7 +49,7 @@ class Contact extends Component {
                     <code className="blue">api.post(request) </code>
                     or
                     <code className="blue"> .request</code></p>
-                <Console />
+                <Console route="/contact" />
             </div>
         )
     }

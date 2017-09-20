@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
+const bodyParser = require('body-parser');
 
 require('./models/docs');
 require('./models/contact');
@@ -10,7 +11,9 @@ mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoUri)
 
 const app = express();
+app.use(bodyParser.json());
 require('./routes/commandRoutes')(app);
+require('./routes/mailRoutes')(app);
 
 // check if dev or production
 if (process.env.NODE_ENV === 'production') {

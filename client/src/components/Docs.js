@@ -62,7 +62,7 @@ class Docs extends Component {
                 <p>Quick usage:<br/>
                     {this.renderNav()} |
                 </p>
-                <Console />
+                <Console route="/documentation"/>
             </div>
         )
     }

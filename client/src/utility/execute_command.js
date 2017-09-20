@@ -12,7 +12,7 @@ export const executeCommand = (command, callback) => {
     if ((command[1] === "get" && command[0] === "portfolio") || command[0] === ".portfolio"){
         return "portfolio"
     }
-    if ((command[1] === "get" && command[0] === "request") || command[0] === ".request"){
+    if ((command[1] === "post" && command[0] === "request") || command[0] === ".request"){
         return "request"
     }
     if (command[0] === "cls") {

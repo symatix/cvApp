@@ -33,8 +33,18 @@ class Services extends Component {
         console.log(this.props.services);
         return (
             <div>
+                <pre>
+                    {`
+                      _
+                     (_)
+  ___  ___ _ ____   ___  ___ ___  ___
+ / __|/ _ \\ '__\\ \\ / / |/ __/ _ \\/ __|
+ \\__ \\  __/ |   \\ V /| | (_|  __/\\__ \\
+ |___/\\___|_|    \\_/ |_|\\___\\___||___/
+                    `}
+                </pre>
                 {this.renderContent()}
-                <Console />
+                <Console route="/services"/>
             </div>
         );
     }

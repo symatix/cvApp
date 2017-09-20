@@ -34,6 +34,19 @@ export const fetchServices = (callback) => async dispatch => {
     callback();
 }
 
+export const sendMail = (mailOptions, succ, err) => async dispatch => {
+    if(mailOptions){
+        const res = await axios.post("/api/request", mailOptions);
+        if (res){
+            succ();
+        } else {
+            err();
+        }
+        dispatch({type: "SEND_MAIL", payload: res.data})
+    }
+}
+
+
 export const clearState = (callback) => {
     callback();
     return { type: TYPE.CLEAR_STATE, payload: null }

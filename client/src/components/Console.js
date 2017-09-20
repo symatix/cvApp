@@ -7,7 +7,7 @@ import { executeCommand } from '../utility/execute_command'
 class Console extends Component {
     constructor(props){
         super(props);
-        this.state = { input: "" }
+        this.state = { input: "", command: "" }
 
         this.handleInput = this.handleInput.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -15,7 +15,7 @@ class Console extends Component {
     }
 
     handleInput(e){
-        this.setState({ input: e.target.value, command: '' })
+        this.setState({ input: e.target.value })
     }
 
     submitCallback(){
@@ -27,6 +27,8 @@ class Console extends Component {
         const validated = validateCommand(this.state.input);
         const command = executeCommand(validated);
         this.setState({ command: command })
+
+        this.props.sendMail();
 
         switch(command){
             case "docs":
@@ -61,7 +63,7 @@ class Console extends Component {
         return(
             <form onSubmit={this.handleSubmit}>
                 <span className="green">{this.props.client.address}@servicesAPI </span>
-                <span className="blue">/usr/shell $ </span>
+                <span className="blue">{this.props.route} $ </span>
                 <input
                     id="console"
                     type="text"
