@@ -41,12 +41,12 @@ class ClientData extends Component {
                         </tr>
                         <tr>
                             <td>Exposed commands</td>
-                            <td>=> &#123;
-                                <span className={this.props.result === "portfolio" ? "red" : "green"}> .portfolio </span>
-                                <span className={this.props.result === "services" ? "red" : "green"}>.services </span>
-                                <span className={this.props.result === "contact" ? "red" : "green"}>.contact </span>
-                                <span className={this.props.result === "request" ? "red" : "green"}>.request </span>
-                                <span className={this.props.result === "error" ? "red" : "hidden"}>[ERROR]</span>
+                            <td>=>
+                                <span className={this.props.result === "error" ? "red" : "hidden"}> [ERROR]</span> &#123;
+                                <span className={this.props.result === "portfolio" ? "blue" : "green"}> .portfolio </span>
+                                <span className={this.props.result === "services" ? "blue" : "green"}>.services </span>
+                                <span className={this.props.result === "contact" ? "blue" : "green"}>.contact </span>
+                                <span className={this.props.result === "request" ? "blue" : "green"}>.request </span>
                                 &#125;
                             </td>
                         </tr>

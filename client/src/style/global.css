@@ -107,6 +107,9 @@ table.usage{
 td{
     min-width:100px;
 }
+pre {
+	white-space:pre-wrap
+}
 .row{
 	position:relative;
 	width:100%;
