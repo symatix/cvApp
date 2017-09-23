@@ -41,7 +41,14 @@ class ClientData extends Component {
                         </tr>
                         <tr>
                             <td>Exposed commands</td>
-                            <td>=> &#123; <span className="green">.portfolio .services .contact .request</span> &#125; </td>
+                            <td>=> &#123;
+                                <span className={this.props.result === "portfolio" ? "red" : "green"}> .portfolio </span>
+                                <span className={this.props.result === "services" ? "red" : "green"}>.services </span>
+                                <span className={this.props.result === "contact" ? "red" : "green"}>.contact </span>
+                                <span className={this.props.result === "request" ? "red" : "green"}>.request </span>
+                                <span className={this.props.result === "error" ? "red" : "hidden"}>[ERROR]</span>
+                                &#125;
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -50,8 +57,8 @@ class ClientData extends Component {
     }
 }
 
-function mapStateToProps({ client }){
-    return { client }
+function mapStateToProps({ client, result }){
+    return { client, result }
 }
 
 export default connect(mapStateToProps, { fetchClient })(ClientData)
