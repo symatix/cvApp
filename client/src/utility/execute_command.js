@@ -1,21 +1,24 @@
 
 export const executeCommand = (command, callback) => {
-    if (command[0] === "docs" || command[0] === "help"){
+    const parameter = command[0]
+    const request = command[1]
+
+    if (parameter === "docs" || parameter === "help" ||  parameter === ".help" ||  parameter === ".docs"){
         return "docs"
     }
-    if ((command[1] === "get" && command[0] === ("contact")) || command[0] === ".contact"){
+    if ((request === "get" && parameter === ("contact")) || parameter === ".contact"){
         return "contact"
     }
-    if ((command[1] === "get" && command[0] === "services") || command[0] === ".services"){
+    if ((request === "get" && parameter === "services") || parameter === ".services"){
         return "services"
     }
-    if ((command[1] === "get" && command[0] === "portfolio") || command[0] === ".portfolio"){
+    if ((request === "get" && parameter === "portfolio") || parameter === ".portfolio"){
         return "portfolio"
     }
-    if ((command[1] === "post" && command[0] === "request") || command[0] === ".request"){
+    if ((request === "post" && parameter === "request") || parameter === ".request"){
         return "request"
     }
-    if (command[0] === "cls") {
+    if (parameter === "cls") {
         return "cls"
     }
     return "error"

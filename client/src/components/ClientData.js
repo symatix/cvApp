@@ -23,7 +23,7 @@ class ClientData extends Component {
                         </tr>
                         <tr>
                             <td>Message</td>
-                            <td>=> <span className="green">Welcome to SERVICES API by Dino Kraljeta</span></td>
+                            <td>=> <span className="green">Welcome to SERVICE API by Dino Kraljeta</span></td>
                         </tr>
                         <tr>
                             <td>Logging request source to server</td>

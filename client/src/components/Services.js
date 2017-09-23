@@ -3,12 +3,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import Console from './Console';
+import HeadingServices from './headings/HeadingServices'
 
 class Services extends Component {
     renderServices() {
         return this.props.services.map(({ service }) => {
             return (
-                <li className="grey" key={service}>
+                <li className="grey-card" key={service}>
                     {service}
                 </li>
             );
@@ -30,20 +31,14 @@ class Services extends Component {
     }
 
     render() {
-        console.log(this.props.services);
         return (
             <div>
-                <pre>
-                    {`
-                      _
-                     (_)
-  ___  ___ _ ____   ___  ___ ___  ___
- / __|/ _ \\ '__\\ \\ / / |/ __/ _ \\/ __|
- \\__ \\  __/ |   \\ V /| | (_|  __/\\__ \\
- |___/\\___|_|    \\_/ |_|\\___\\___||___/
-                    `}
-                </pre>
-                {this.renderContent()}
+                <div className="card">
+                        <div className="card-content">
+                        <HeadingServices />
+                        {this.renderContent()}
+                    </div>
+                </div>
                 <Console route="/services"/>
             </div>
         );

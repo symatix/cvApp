@@ -12,9 +12,11 @@ const DocsInfo = () => {
   / ____ \\| |    _| |_  | |__| | (_) | (__| |_| | | | | | |  __/ | | | || (_| | |_| | (_) | | | |
  /_/    \\_\\_|   |_____| |_____/ \\___/ \\___|\\__,_|_| |_| |_|\\___|_| |_|\\__\\__,_|\\__|_|\\___/|_| |_|
             `}</pre>
+            <p>The idea behing this API is that you have command over what happends with your browser. No clicks and no hidden magic.<br/>
+            You want something! Type a GET request. You want to send something? Type a POST request!</p>
             <p>The API is exposed via local tunnel. This version adds several features that enable communication to fetch and send data.<br/>
             The commands are issued using a CLI interface.</p>
-            <p>To fetch data from the server, such as list of services, portfolio, contact, etc., use command
+            <p>To fetch data from the server, such as list of services, portfolio, contact and contact, use command
                 <code className="blue"> api.
                     <span className="green">get</span>(<span className="grey">[PARAM]</span>)
                 </code><br/>

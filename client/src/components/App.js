@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { reset } from '../actions';
 import ClientData from './ClientData';
 import Landing from './Landing';
 import Docs from './Docs';
@@ -11,12 +12,18 @@ import Err from './Err';
 
 class App extends Component {
     focusConsole(){
-        document.querySelector("input").focus();
+        if (document.querySelector("#console")){
+            document.querySelector("#console").focus();
+        }
     }
     componentDidMount(){
-        if(this.props.result !== "request"){
-            window.addEventListener('click', this.focusConsole);
-        }
+        window.addEventListener('click', this.focusConsole);
+        document.addEventListener("keydown", e => {
+            if( e.key === "Escape"){
+                    this.props.reset();
+            }
+
+        })
 
         return;
     }
@@ -45,6 +52,7 @@ class App extends Component {
         }
         return <Landing />
     }
+
   render() {
     return (
         <div className="App">
@@ -59,4 +67,4 @@ function mapStateToProps({ result }){
     return { result }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { reset })(App);

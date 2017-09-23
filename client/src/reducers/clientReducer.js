@@ -1,4 +1,4 @@
-import { FETCH_CLIENT, CLEAR_STATE } from '../actions/types'
+import { FETCH_CLIENT } from '../actions/types'
 
 export default function (state = {}, action){
 
@@ -6,9 +6,6 @@ export default function (state = {}, action){
 
 		case FETCH_CLIENT:
 			return action.payload || false
-
-        case CLEAR_STATE:
-            return {};
 
 		default:
 			return state

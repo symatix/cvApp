@@ -29,6 +29,12 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     background-color:inherit;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
 table.usage{
     margin-left:15px;
     margin-bottom:5px;
@@ -36,6 +42,7 @@ table.usage{
 td{
     min-width:100px;
 }
+
 .hidden{
     display:none;
 }
@@ -47,8 +54,14 @@ td{
 .indent{
     margin-left:20px;
 }
+.bold{
+    font-weight:bold;
+}
 .grey{
     color:#8c8c8c;
+}
+.grey-card{
+    color:#b3b3b3;
 }
 .red{
     color:red;
@@ -58,4 +71,40 @@ td{
 }
 .blue{
     color:#4da6ff;
+}
+
+/* CARD STYLING */
+.card{
+    display:inline-block;
+    background-color:#0052cc;
+    margin-bottom:20px;
+}
+.card-content{
+    margin:4px;
+    padding:10px 30px 0px 10px;
+    border-width:4px;
+    border-style: double;
+    border-color: #e6f0ff;
+}
+.card-content > pre {
+    display:inline-block;
+    font-weight:900;
+    width:100%;
+    padding: 0 10px;
+    background-color:#cc2900;
+    margin-top:0px;
+    box-shadow: 10px 10px #1a1a1a;
+}
+.card-content > ol > li {
+    color:#e6e6e6;
+    padding:5px 10px;
+}
+.card-content > ol > li > span{
+    color:black;
+}
+.card-content > ol > li:nth-child(odd){
+    background-color:#8c8c8c
+}
+.card-content > ol > li:nth-child(even){
+    background-color:#808080
 }

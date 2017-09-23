@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Console from './Console';
+import HeadingRequest from './headings/HeadingRequest'
 import validateEmail from '../utility/validateEmail';
 
+import InputElement from './InputElement';
 
-const initialState = {
-    from: '',
+
+let initialState = {
+    email: '',
     subject: '',
     text: '',
     confirmation:'',
@@ -25,26 +28,28 @@ class RequestForm extends Component {
 
         this.state = { initialState }
 
-        this.handleFrom = this.handleFrom.bind(this)
-        this.handleSubject = this.handleSubject.bind(this)
-        this.handleText = this.handleText.bind(this)
+        this.handleInput = this.handleInput.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleForm = this.handleForm.bind(this)
-        this.handleConfirmation = this.handleConfirmation.bind(this)
+        this.handleText = this.handleText.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this)
         this.handleLastKeyPress = this.handleLastKeyPress.bind(this)
         this.nextInput = this.nextInput.bind(this)
 
     }
 
+    componentDidMount() {
+        document.addEventListener('keydown', (e)=> {
+           if(e.key === "Escape"){
+               this.props.reset();
+           }
+        });
+    }
 
-    nextInput(e){
-        e.preventDefault();
-
+    nextInput(){
         if (!this.state.inputSubject) {
-            const validate = validateEmail(this.state.from);
+            const validate = validateEmail(this.state.email);
             if (validate){
                 this.setState({inputSubject:true})
-                this.setState({errorMsg:''})
                 return;
             } else {
                 this.setState({errorMsg:'Email value is not valid.'})
@@ -52,17 +57,22 @@ class RequestForm extends Component {
             }
         }
         if (!this.state.inputText){
-            if(this.state.subject){
-                this.setState({inputText:true})
-                return;
-            } else {
-                this.setState({errorMsg:'Subject value not present.'})
-                return;
-            }
+            this.setState({inputText:true})
+            return;
+        } else {
+            this.setState({errorMsg:'Subject value not present.'})
+            return;
+        }
+    }
+
+    handleKeyDown(e){
+        if(e.key === "Enter"){
+            this.setState({errorMsg:''})
+            this.nextInput();
+            return;
         }
         return;
     }
-
 
     handleLastKeyPress(e){
         if(e.key === "Enter"){
@@ -72,29 +82,25 @@ class RequestForm extends Component {
         return;
     }
 
-    handleFrom(e){
-        this.setState({from:e.target.value})
-    }
-    handleSubject(e){
-        this.setState({subject:e.target.value})
-    }
-    handleText(e){
-        this.setState({text:e.target.value})
-    }
-    handleForm(e){
-        if(e.key === "Enter"){
-            if (!this.state.text){
-                this.setState({errorMsg:'Message value not present.'})
-                return;
-            }
-            this.setState({errorMsg:''})
-            this.setState({inputConfirmation:true})
-            return;
-        }
+    handleInput(e){
+        this.setState({[e.target.name]: e.target.value})
     }
 
-    handleConfirmation(e){
-        this.setState({confirmation:e.target.value})
+    handleText(e){
+        if(e.key === "Enter"){
+            if (!this.state.text){
+                this.setState({
+                    text:'',
+                    errorMsg:'Message value not present.'
+                })
+                return;
+            }
+            this.setState({
+                errorMsg:'',
+                inputConfirmation:true
+            })
+            return;
+        }
     }
 
     handleSubmit(e){
@@ -102,26 +108,23 @@ class RequestForm extends Component {
         const { confirmation } = this.state;
 
         if (confirmation === "n"){
+            initialState.email = this.state.email;
             this.setState(initialState)
-            this.refs.inputRestart.focus();
+            document.querySelector("input").focus();
             return;
         }
 
-        if (confirmation === "quit") {
-            this.props.clearState(()=> this.setState(initialState));
-        }
-
         if (confirmation !== "y") {
-            this.setState({errorMsg:'y = yes, n = no, quit.'})
+            this.setState({errorMsg:'y = yes, n = no, esc = quit'})
             return
         }
         this.setState({console:true, output:"waiting...", outputColor:"grey"})
-        const { from, subject, text } = this.state;
+        const { email, subject, text } = this.state;
 
         const mail = {
-            from,
+            from: email,
             subject,
-            text: text + "\n\n\n// from: " + from,   // gmail replaces "from" with authenticated user...so it's me to me by default...
+            text: text + "\n\n\n// from: " + email,   // gmail replaces "from" with authenticated user...so it's me to me by default...
             to:'d.kraljeta@gmail.com'
         }
 
@@ -135,32 +138,23 @@ class RequestForm extends Component {
     render(){
         return(
             <div>
-                <pre>
-                {`
-                                 _
-                                | |
-  _ __ ___  __ _ _   _  ___  ___| |_
- | '__/ _ \\/ _' | | | |/ _ \\/ __| __|
- | | |  __/ (_| | |_| |  __/\\__ \\ |_
- |_|  \\___|\\__, |\\__,_|\\___||___/\\__|
-              | |
-              |_|
-                `}
-                </pre>
-                <form onSubmit={this.nextInput}>
-                    <div>
-                        <span className="grey">(email): </span>
-                        <input
-                            ref="inputRestart"
-                            name="from"
-                            type="text"
-                            spellCheck={false}
-                            autoFocus={this.state.inputSubject ? false : true}
-                            autoComplete="off"
-                            onChange={this.handleFrom}
-                            value={this.state.from} />
+                <div className="card">
+                    <div className="card-content">
+                        <HeadingRequest />
+                        <p>Fill out requested information</p>
+                        <p>- to continue, press <span className="green">Enter</span>.</p>
+                        <p>- to exit, press <span className="red">Escape</span>.</p>
                     </div>
-                </form>
+                </div>
+                    <InputElement
+                        type="text"
+                        name="email"
+                        label="(e-mail):"
+                        autoFocus={this.state.inputSubject ? false : true}
+                        onKeyPress={this.handleKeyDown}
+                        onChange={this.handleInput}
+                        content={this.state.email}
+                    />
                 {this.renderSubject()}
                 {this.renderText()}
                 {this.renderConfirmation()}
@@ -173,19 +167,15 @@ class RequestForm extends Component {
     renderSubject(){
         if (this.state.inputSubject){
             return(
-                <form onSubmit={this.nextInput}>
-                    <div className={this.state.inputSubject ? "" : "hidden"}>
-                        <span className="grey">(subject): </span>
-                        <input
-                            name="subject"
-                            type="text"
-                            spellCheck={false}
-                            autoFocus={this.state.inputText ? false : true}
-                            autoComplete="off"
-                            onChange={this.handleSubject}
-                            value={this.state.subject} />
-                    </div>
-                </form>
+                <InputElement
+                    type="text"
+                    name="subject"
+                    label="(subject):"
+                    autoFocus={this.state.inputText ? false : true}
+                    onKeyPress={this.handleKeyDown}
+                    onChange={this.handleInput}
+                    content={this.state.subject}
+                />
             )
         }
         return;
@@ -193,20 +183,18 @@ class RequestForm extends Component {
     renderText(){
         if (this.state.inputText){
             return(
-                <form>
-                    <div className={this.state.inputText ? "" : "hidden"}>
-                        <label className="grey">(message): </label>
-                        <textarea
-                            name="text"
-                            rows="4"
-                            autoFocus={this.state.inputConfirmation ? false : true}
-                            spellCheck={false}
-                            autoComplete="off"
-                            onKeyPress={this.handleForm}
-                            onChange={this.handleText}
-                            value={this.state.text} />
-                        </div>
-                </form>
+                <div>
+                    <label className="grey">(message): </label>
+                    <textarea
+                        name="text"
+                        rows="4"
+                        autoComplete="off"
+                        spellCheck={false}
+                        autoFocus={this.state.inputConfirmation ? false : true}
+                        onKeyPress={this.handleText}
+                        onChange={this.handleInput}
+                        value={this.state.text} />
+                </div>
             )
         }
         return;
@@ -214,20 +202,15 @@ class RequestForm extends Component {
     renderConfirmation(){
         if (this.state.inputConfirmation){
             return(
-                <form>
-                    <div className={this.state.inputSubject ? "" : "hidden"}>
-                        <span className="grey">confirm (y/n/quit): </span>
-                        <input
-                            name="subject"
-                            type="text"
-                            spellCheck={false}
-                            autoFocus={true}
-                            autoComplete="off"
-                            onKeyPress={this.handleLastKeyPress}
-                            onChange={this.handleConfirmation}
-                            value={this.state.confirmation} />
-                    </div>
-                </form>
+                    <InputElement
+                        type="text"
+                        name="confirmation"
+                        label="confirm (y/n):"
+                        autoFocus={true}
+                        onKeyPress={this.handleLastKeyPress}
+                        onChange={this.handleInput}
+                        content={this.state.confirmation}
+                    />
             )
         }
         return;
@@ -237,7 +220,11 @@ class RequestForm extends Component {
         if(this.state.console){
             return (
                 <div>
-                    <p>> response: <span className={this.state.outputColor}>{this.state.output}</span></p>
+                    <p>> response
+                        [<span className={this.state.outputColor}>
+                            {this.state.output}
+                        </span>]
+                    </p>
                     <Console route="/request"/>
                 </div>
             )

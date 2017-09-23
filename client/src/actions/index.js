@@ -4,9 +4,8 @@ import * as TYPE from './types'
 // change ip when going to production
 
 export const inputToState = (input) => {
-    return { type:TYPE.RESULT, payload: input}
+    return { type:TYPE.RESULT, payload: input }
 }
-
 
 export const fetchClient = () => async dispatch => {
     const res = await axios.get("/api/client")
@@ -34,6 +33,12 @@ export const fetchServices = (callback) => async dispatch => {
     callback();
 }
 
+export const fetchPortfolio = (callback) => async dispatch => {
+    const res = await axios.get("/api/portfolio");
+    dispatch({ type: TYPE.FETCH_PORTFOLIO, payload: res.data})
+    callback();
+}
+
 export const sendMail = (mailOptions, callback) => async dispatch => {
     const res = await axios.post("/api/request", mailOptions);
     if (res.data){
@@ -44,8 +49,6 @@ export const sendMail = (mailOptions, callback) => async dispatch => {
     dispatch({type: "SEND_MAIL", payload: res.data})
 }
 
-
-export const clearState = (callback) => {
-    callback();
-    return { type: TYPE.CLEAR_STATE, payload: null }
+export const reset = () => {
+    return { type: TYPE.RESET, payload: null }
 }
