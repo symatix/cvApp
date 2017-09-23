@@ -61,13 +61,15 @@ class Protfolio extends Component {
     render() {
         return (
             <div>
-                <div className="card">
-                    <div className="card-content">
-                        <HeadingPortfolio />
-                        <p>Type in a <span className="green">number</span> from the list to open the desired link in a new window.<br/>
-                        Press <span className="red">Escape</span> to exit.</p>
-                        <p className="red" />
-                        <ol>{this.renderContent()}</ol>
+                <div className="row">
+                    <div className="card">
+                        <div className="card-content">
+                            <HeadingPortfolio />
+                            <p>Type in a <span className="green">number</span> from the list to open the desired link in a new window.<br/>
+                            Press <span className="red">Escape</span> to exit.</p>
+                            <p className="red" />
+                            <ol>{this.renderContent()}</ol>
+                        </div>
                     </div>
                 </div>
                 <InputElement

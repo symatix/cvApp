@@ -1,9 +1,76 @@
+@media screen and (min-width: 1500px)  {
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	p{
+		text-align:justify;
+	}
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr {
+		display: block;
+		margin:0px;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	tr { border-bottom: 1px dashed #ccc; }
+    tr:last-child { border-bottom: none }
+
+	td {
+		/* Behave  like a "row" */
+		border: none;
+		position: relative;
+	}
+
+	td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		white-space: nowrap;
+	}
+	.input label, .input input{
+	    float: none; /* if you had floats before? otherwise inline-block will behave differently */
+	    display: inline-block;
+	}
+	.input textarea{
+	display: inline-block;
+	vertical-align: middle;
+	}
+	.row{
+		text-align:center;
+	}
+	.row-header{
+		font-size:0.4em;
+		font-weight:bold;
+	}
+	.card-content > pre {
+		font-size:0.3em;
+
+	}
+	.input{
+		width:100%;
+	}
+	.card-content, .input{
+		text-align:left;
+	}
+}
+
 body{
-    margin: 0;
-    padding: 15px;
+	width:100%;
+	height:100%;
     background-color:#0d0d0d;
     color:#e6e6e6;
     font-family: Consolas;
+	margin:0 !important;
+}
+#root{
+	padding:8px;
 }
 input, textarea{
     font-family: inherit;
@@ -15,13 +82,6 @@ input, textarea{
 }
 textarea{
     resize: none;
-}
-label{
-    vertical-align: top;
-    display: inline-block;
-}
-div > input, div > textarea {
-    width:500px;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -35,12 +95,25 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+table{
+    border-collapse: collapse;
+    display:block;
+}
 table.usage{
     margin-left:15px;
     margin-bottom:5px;
 }
+
 td{
     min-width:100px;
+}
+.row{
+	position:relative;
+	width:100%;
+}
+.row-header{
+	width:100%;
+	text-align:center;
 }
 
 .hidden{
@@ -86,7 +159,7 @@ td{
     border-style: double;
     border-color: #e6f0ff;
 }
-.card-content > pre {
+.card-content > div > div > pre {
     display:inline-block;
     font-weight:900;
     width:100%;

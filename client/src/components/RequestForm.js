@@ -138,27 +138,30 @@ class RequestForm extends Component {
     render(){
         return(
             <div>
-                <div className="card">
-                    <div className="card-content">
-                        <HeadingRequest />
-                        <p>Fill out requested information</p>
-                        <p>- to continue, press <span className="green">Enter</span>.</p>
-                        <p>- to exit, press <span className="red">Escape</span>.</p>
+                <div className="row">
+                    <div className="card">
+                        <div className="card-content">
+                            <HeadingRequest />
+                            <p>Fill out requested information</p>
+                            <p>- to continue, press <span className="green">Enter</span>.</p>
+                            <p>- to exit, press <span className="red">Escape</span>.</p>
+                        </div>
                     </div>
+                        <InputElement
+                            type="text"
+                            name="email"
+                            label="(e-mail):"
+                            autoFocus={this.state.inputSubject ? false : true}
+                            onKeyPress={this.handleKeyDown}
+                            onChange={this.handleInput}
+                            content={this.state.email}
+                        />
+                    {this.renderSubject()}
+                    {this.renderText()}
+                    {this.renderConfirmation()}
+                    <p className="red">{this.state.errorMsg}</p>
+
                 </div>
-                    <InputElement
-                        type="text"
-                        name="email"
-                        label="(e-mail):"
-                        autoFocus={this.state.inputSubject ? false : true}
-                        onKeyPress={this.handleKeyDown}
-                        onChange={this.handleInput}
-                        content={this.state.email}
-                    />
-                {this.renderSubject()}
-                {this.renderText()}
-                {this.renderConfirmation()}
-                <p className="red">{this.state.errorMsg}</p>
                 {this.renderConsole()}
             </div>
         )
@@ -183,7 +186,7 @@ class RequestForm extends Component {
     renderText(){
         if (this.state.inputText){
             return(
-                <div>
+                <div className="input">
                     <label className="grey">(message): </label>
                     <textarea
                         name="text"

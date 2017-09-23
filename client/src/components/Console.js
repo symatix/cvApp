@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { validateCommand } from '../utility/validate_command'
 import { executeCommand } from '../utility/execute_command'
+import { checkDevice } from '../utility/check_device'
 
 let state = { input: "", command: "", index: 0, history: [] }
 
@@ -19,7 +20,7 @@ class Console extends Component {
     componentWillUnmount() {
         // Remember state for the next mount
         state = this.state;
-        state.input = ''
+        state.input = '';
       }
     handleInput(e){
         this.setState({ input: e.target.value })
@@ -63,7 +64,6 @@ class Console extends Component {
 
         const validated = validateCommand(this.state.input);
         const command = executeCommand(validated);
-        this.setState({ command: command, input: '' })
         switch(command){
 
             case "docs":
@@ -92,23 +92,27 @@ class Console extends Component {
             default:
                 return;
         }
-
-
+        this.setState({ command: command, input: '' })
     }
 
     render(){
+        const device = checkDevice()
         return(
             <form onSubmit={this.handleSubmit}>
-                <span className="green">{this.props.client.address}@ </span>
-                <span className="blue">{this.props.route} $ </span>
-                <input
-                    id="console"
-                    type="text"
-                    autoFocus={true}
-                    autoComplete="off"
-                    onChange={this.handleInput}
-                    onKeyDown={this.handleKeyDown}
-                    value={this.state.input}/>
+                <div  className="input">
+                    <label>
+                        <span className="green">{device ? device : "desktop"}@ </span>
+                        <span className="blue">{this.props.route} $&nbsp;</span>
+                    </label>
+                    <input
+                        id="console"
+                        type="text"
+                        autoFocus={true}
+                        autoComplete="off"
+                        onChange={this.handleInput}
+                        onKeyDown={this.handleKeyDown}
+                        value={this.state.input}/>
+                </div>
             </form>
         )
     }

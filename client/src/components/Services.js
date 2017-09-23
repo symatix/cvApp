@@ -33,10 +33,12 @@ class Services extends Component {
     render() {
         return (
             <div>
-                <div className="card">
-                        <div className="card-content">
-                        <HeadingServices />
-                        {this.renderContent()}
+                <div className="row">
+                    <div className="card">
+                            <div className="card-content">
+                            <HeadingServices />
+                            {this.renderContent()}
+                        </div>
                     </div>
                 </div>
                 <Console route="/services"/>

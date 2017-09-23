@@ -1,20 +1,13 @@
 import React from 'react';
-
+import HeadingDocs from './headings/HeadingDocs'
 
 const DocsInfo = () => {
     return(
         <div>
-            <pre>{`
-           _____ _____   _____                                        _        _   _
-     /\\   |  __ \\_   _| |  __ \\                                      | |      | | (_)
-    /  \\  | |__) || |   | |  | | ___   ___ _   _ _ __ ___   ___ _ __ | |_ __ _| |_ _  ___  _ __
-   / /\\ \\ |  ___/ | |   | |  | |/ _ \\ / __| | | | '_ ' _ \\ / _ \\ '_ \\| __/ _' | __| |/ _ \\| '_ \\
-  / ____ \\| |    _| |_  | |__| | (_) | (__| |_| | | | | | |  __/ | | | || (_| | |_| | (_) | | | |
- /_/    \\_\\_|   |_____| |_____/ \\___/ \\___|\\__,_|_| |_| |_|\\___|_| |_|\\__\\__,_|\\__|_|\\___/|_| |_|
-            `}</pre>
-            <p>The idea behing this API is that you have command over what happends with your browser. No clicks and no hidden magic.<br/>
+            <HeadingDocs />
+            <p>The idea behing this API is that you have command over what happends inside your browser. No clicks and no hidden magic.<br/>
             You want something! Type a GET request. You want to send something? Type a POST request!</p>
-            <p>The API is exposed via local tunnel. This version adds several features that enable communication to fetch and send data.<br/>
+            <p>The API is exposed via local tunnel. This version adds several features that enable fetching and sending data between the client, API server and the database.<br/>
             The commands are issued using a CLI interface.</p>
             <p>To fetch data from the server, such as list of services, portfolio, contact and contact, use command
                 <code className="blue"> api.

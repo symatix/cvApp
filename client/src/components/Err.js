@@ -1,7 +1,7 @@
 import React from 'react';
 import Console from './Console';
 
-const Err = () => {
+const Err = (props) => {
     return (
         <div className="grey">
             <p className="red">Command not recognized as an internal or external command, request or operable program.</p>

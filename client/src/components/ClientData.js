@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchClient } from '../actions';
+import { checkDevice } from '../utility/check_device'
 
 class ClientData extends Component {
     componentDidMount(){
@@ -13,6 +14,7 @@ class ClientData extends Component {
     }
 
     render(){
+        const device = checkDevice();
         return(
             <div className="header grey">
                 <table>
@@ -31,15 +33,15 @@ class ClientData extends Component {
                         </tr>
                         <tr>
                             <td>Deploying to client</td>
-                            <td>=> <span className="red">{navigator.appVersion}</span></td>
+                            <td>=> <span className="red">{device ? device : "desktop arhitecture"}</span></td>
                         </tr>
                         <tr>
-                            <td>Load time</td>
+                            <td>Response time</td>
                             <td>=> <span className="red">{this.caclualteLoadTime()}</span> seconds</td>
                         </tr>
                         <tr>
-                            <td>Allowed access to</td>
-                            <td>=> <span className="green">.portfolio .services .contact .request</span></td>
+                            <td>Exposed commands</td>
+                            <td>=> &#123; <span className="green">.portfolio .services .contact .request</span> &#125; </td>
                         </tr>
                     </tbody>
                 </table>

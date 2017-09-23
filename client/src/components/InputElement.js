@@ -1,8 +1,9 @@
 import React from 'react'
 
 const InputElement = (props) => {
+    const divClass=`input ${props.divClass}`;
     return(
-        <div className={props.divClass}>
+        <div className={divClass}>
             <label className="grey">{props.label}</label>
             <input
                 name={props.name}
